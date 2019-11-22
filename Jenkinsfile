@@ -4,6 +4,9 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '2'))
     skipDefaultCheckout true
   }
+  triggers {
+    eventTrigger simpleMatch('hello-api-deploy-event')
+  }
   stages {
     stage('Test') {
       agent { label 'nodejs-app' }
@@ -17,11 +20,11 @@ pipeline {
     }
     stage('Build and Push Image') {
       when {
-         beforeAgent true
-         branch 'master'
+        beforeAgent true
+        branch 'master'
       }
       steps {
-         echo "TODO - build and push image"
+        echo "TODO - build and push image"
       }
     }
   }
